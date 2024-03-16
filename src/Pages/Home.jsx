@@ -25,7 +25,7 @@ const closeModal = () => {
       <div>
       <h2 className="home-header-title">Where Those Who Know Go to<span> Grow</span></h2>
       
-      <p>Explore clear, concise insights across any subject—from tech to art, math to fashion. Our site demystifies complex concepts and abstract ideas, making them accessible to all. Dive into our straightforward guides and unlock understanding in areas where clarity meets simplicity.</p>
+      <p className="home-header-text">Explore clear, concise insights across any subject—from tech to art, math to fashion. Our site demystifies complex concepts and abstract ideas, making them accessible to all. Dive into our straightforward guides and unlock understanding in areas where clarity meets simplicity.</p>
       <button className="start-learning-button">Start Learning</button>
     </div>
     </div>

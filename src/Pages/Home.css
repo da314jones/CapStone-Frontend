@@ -1,0 +1,55 @@
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+body{
+  background-color: white;
+}
+.image-container {
+  margin-bottom: 20px;
+}
+
+.image {
+  cursor: pointer;
+  width: 300px;
+  height: auto;
+}
+
+.home-header-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #121212;
+}
+
+.home-header-title span {
+  color: #9f00E5;
+}
+
+.home-header-text {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #121212;
+}
+
+.start-learning-button {
+  background-color: #0D08BA;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 15px;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.start-learning-button:hover {
+  background-color: #121212;
+}
+
+/* #0056b3 */

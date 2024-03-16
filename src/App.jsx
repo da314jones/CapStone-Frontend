@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import './App.css'
-import { AuthProvider } from './Providers/AuthProvider'
+import './App.css';
+import { AuthProvider } from './Providers/AuthProvider';
 import Home from "./Pages/Home";
 import Edit from "./Pages/Edit";
 import New from "./Pages/New";
