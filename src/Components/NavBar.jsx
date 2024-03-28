@@ -9,6 +9,9 @@ export default function NavBar() {
   const user = useContext(AuthContext);
   const navigate = useNavigate();
 
+  console.log(user);
+
+
   const handleSignIn = async () => {
     try {
       await signInWithGoogle();

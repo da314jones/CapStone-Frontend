@@ -18,80 +18,69 @@ width: 90%
 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
-export default function VideoNewForm({ onClose, isOpen, archiveId, archiveUrl, onSubmitSuccess }) {
+export default function VideoNewForm({ onClose, isOpen, onSubmitSuccess }) {
   const navigate = useNavigate();
-  const [video, setVideo] = useState({
+  const [videoMeta, setVideoMeta] = useState({
     category: "",
     title: "",
     summary: "",
-    video_url: archiveUrl,
-    isPrivate: "",
+    isPrivate: true,
   });
 
-  const user_id = sessionStorage.getItem("userUID");
-  const metaDataObject = {
-    uid: user_id,
-    archiveId: archiveId,
-    ...video,
-  };
-  console.log(metaDataObject);
-
-  useEffect(() => {
-    setVideo(prevVideo => ({ ...prevVideo, video_url: archiveUrl }));
-  }, [archiveUrl])
-
-  console.log(user_id);
-
- 
+  const archiveId = localStorage.getItem('archiveId');
 
 
   const addVideo = async () => {
-    if (!user_id) {
-      console.error("Firebase UID is not available.");
-    }   
-    console.log("metaDataObject with archiveId:", metaDataObject);
+    console.log('Submitting with archiveId:', archiveId);
+
+    if (!archiveId) {
+      console.error('Archive ID is undefined.:');
+      return
+    }
     try {
-      const response = await fetch(`${API}/videos/video-metadata`, {
+      console.log('Submitting with archiveId:', archiveId);
+      const response = await fetch(`${API}/videos/uploadVideo/${archiveId}`, {
         method: "POST",
-        body: JSON.stringify(metaDataObject),
+        body: JSON.stringify({ ...videoMeta, archiveId }),
         headers: {
           "Content-Type": "application/json",
         },
       });
       if (!response.ok) {
-        throw new Error("Failed to add metaDataObject");
+        throw new Error("Failed to add videoMetaObject");
       }
       const data = await response.json();
       console.log("MetaDataObject added:", data);
-      // await uploadToS3(metaDataObject);
-
+      
       onClose();
       onSubmitSuccess();
+      localStorage.removeItem('archiveId');
     } catch (error) {
       console.error("Error submitting metaDataObject:", error);
     }
   };
 
-  const handleTextChange = (event) => {
-    setVideo({ ...video, [event.target.id]: event.target.value });
+  
+  
+  const handleTextChange = (e) => {
+    setVideoMeta({ ...videoMeta, [e.target.id]: e.target.value });
   };
 
-  const isValidMetadata = (video) => {
+  const isValidMetadata = (videoMeta) => {
     return (
-      video.title.trim() !== "" &&
-      video.summary.trim() !== "" &&
-      video.video_url.trim() !== ""
+      videoMeta.category?.trim() !== "" &&
+      videoMeta.title?.trim() !== "" &&
+      videoMeta.summary?.trim() !== ""
     );
   };
 
-  console.log(archiveId);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (isValidMetadata(video)) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form data being submitted:', videoMeta);
+      if (isValidMetadata(videoMeta)) {
       addVideo();
     } else {
-      console.error("Invalid video metadata:", video);
+      console.error("Invalid video metadata:", videoMeta);
     }
   };
 
@@ -109,10 +98,23 @@ export default function VideoNewForm({ onClose, isOpen, archiveId, archiveUrl, o
                 onSubmit={handleSubmit}
                 className="max-w-md mx-auto bg-pink-300 text-black p-2 rounded shadow-md"
               >
+
+                <label htmlFor="category">Category:</label>
+                <input
+                  id="category"
+                  value={videoMeta.category}
+                  type="text"
+                  onChange={handleTextChange}
+                  placeholder="Enter Category..."
+                  required
+                  className="form-input mb-4"
+                  style={{ width: "100%", marginBottom: "1rem" }}
+                />  
+
                 <label htmlFor="title">Title:</label>
                 <input
                   id="title"
-                  value={video.title}
+                  value={videoMeta.title}
                   type="text"
                   onChange={handleTextChange}
                   placeholder="Enter Title..."
@@ -124,7 +126,7 @@ export default function VideoNewForm({ onClose, isOpen, archiveId, archiveUrl, o
                 <label htmlFor="summary">Summary:</label>
                 <input
                   id="summary"
-                  value={video.summary}
+                  value={videoMeta.summary}
                   type="text"
                   onChange={handleTextChange}
                   placeholder="Describe the video..."
@@ -132,8 +134,6 @@ export default function VideoNewForm({ onClose, isOpen, archiveId, archiveUrl, o
                   className="form-input mb-4"
                   style={{ width: "100%", marginBottom: "1rem" }}
                 />
-
-                {/* <p>{video.video_url}</p> */}
 
                 <div>
                   <button

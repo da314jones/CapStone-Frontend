@@ -8,10 +8,10 @@ const API = import.meta.env.VITE_API_URL;
 export default function VideoSession() {
   const [sessionId, setSessionId] = useState("");
   const [token, setToken] = useState("");
+  const [archiveId, setArchiveId] = useState("");
   const [otSdkReady, setOtSdkReady] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
-  const [archiveId, setArchiveId] = useState("");
   const [archiveUrl, setArchiveUrl] = useState("");
   const [showVideoNewForm, setShowVideoNewForm] = useState(false);
 
@@ -24,6 +24,14 @@ export default function VideoSession() {
     document.head.appendChild(script);
     return () => document.head.removeChild(script);
   }, []);
+
+  const user_id = sessionStorage.getItem('userUID');
+  console.log('Current userId:', user_id);
+
+  useEffect(() => {
+    console.log('Current archiveId:', archiveId);
+}, [archiveId]);
+
 
   const fetchSessionAndToken = async () => {
     try {
@@ -40,7 +48,6 @@ export default function VideoSession() {
       const tokenData = await tokenRes.json();
 
       setSessionId(sessionData.sessionId);
-      console.log(sessionData.sessionId);
       setToken(tokenData.token);
       console.log(sessionData, tokenData);
     } catch (error) {
@@ -58,19 +65,22 @@ export default function VideoSession() {
       const response = await fetch(`${API}/videos/start-recording`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sessionId }),
+        body: JSON.stringify({ sessionId, user_id }),
       });
       if (!response.ok) throw new Error("Failed to start recording");
       const data = await response.json();
-      console.log("Recording started:", data);
       setIsRecording(true);
-      console.log(data.archiveId);
-      setArchiveId(data.archiveId);
+    localStorage.setItem('archiveId', data.archiveId);
+      console.log("Setting archiveId:", data.archiveId);
+      setArchiveId(data.archiveId);ib
+      console.log("archiveId state after set:", archiveId);
+            console.log("Recording started:", data);
     } catch (error) {
       console.log("Error starting recording:", error);
     }
   };
 
+  let archive = null;
   const stopRecording = async () => {
     try {
       if (!archiveId) throw new Error("archiveId is not defined");
@@ -79,16 +89,16 @@ export default function VideoSession() {
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ archiveId }),
       });
+      setArchiveId(archiveId)
       if (!response.ok) throw new Error("Failed to stop recording");
       const data = await response.json();
-      console.log("Recording stopped:", data);
-      console.log(data.archiveId);
-      console.log(data.archiveUrl);
       setIsRecording(false);
+      console.log("Before showPage:", archiveId)
       setShowVideoNewForm(true);
-      setArchiveUrl(data.archiveUrl);
-      setArchiveId(data.archiveId);
-    } catch (error) {
+      setArchiveId(data.archiveId);  
+      console.log("Recording stopped:", data);
+      setArchiveId(data.archiveId);  
+       } catch (error) {
       console.error("Error stopping recording:", error);
     }
   };
@@ -106,6 +116,7 @@ export default function VideoSession() {
     setIsConnected(false);
     setSessionId("");
     setToken("");
+    localStorage.removeItem('archiveId'); // Clear the archiveId from localStorage when ending the session
   };
 
   if (!otSdkReady) {
@@ -142,7 +153,6 @@ export default function VideoSession() {
           isOpen={showVideoNewForm}
           onClose={handleCloseForm}
           archiveId={archiveId}
-          archiveUrl={archiveUrl}
           onSubmitSuccess={handleVideoFormSubmitSuccess}
         />
       )}
