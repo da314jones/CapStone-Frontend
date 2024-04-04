@@ -1,16 +1,28 @@
-name: GitHub Actions Demo
-run-name: ${{ github.ref_name }} is testing out GitHub Actions 🚀
+name: CI
+
 on:
   pull_request:
     branches:
       - main
+
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
-steps:
-- uses: actions/checkout@v4
-- uses: actions/setup-node@v4
-  with:
-    node-version: 18
-- run: npm ci
-- run: npm install
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: Set run name
+      run: echo "run_name=CI - ${{ github.ref_name }}" >> $GITHUB_ENV
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests
+      run: npm test
