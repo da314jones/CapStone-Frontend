@@ -1,4 +1,4 @@
-name: CI
+name: Check Dependancies for conflict
 run-name: Checking ${{ github.ref }} by @${{ github.actor }}
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-test:
+  install-dependencies:
     runs-on: ubuntu-latest
 
     steps:
