@@ -1,8 +1,10 @@
-steps:
+name: GitHub Actions Demo
+run-name: ${{ github.ref_name }} is testing out GitHub Actions 🚀
 on:
   pull_request:
     branches:
       - main
+steps:
 - uses: actions/checkout@v4
 - uses: actions/setup-node@v4
   with:
