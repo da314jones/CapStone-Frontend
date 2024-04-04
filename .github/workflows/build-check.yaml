@@ -1,5 +1,5 @@
 name: CI
-run-name: Checking ${{ github.ref_name }} by @${{ github.actor }}
+run-name: Checking ${{ github.ref }} by @${{ github.actor }}
 on:
   pull_request:
     branches:
