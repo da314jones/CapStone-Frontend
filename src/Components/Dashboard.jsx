@@ -6,7 +6,7 @@ import "./Dashboard.css";
 
 const API = import.meta.env.VITE_API_URL;
 
-export default function Dashboard() {
+export default function Dashboard({ video }) {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,11 +14,11 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch(`${API}/videos/index`);
+        const response = await fetch(`${API}/videos/indexThumbnails`);
         const data = await response.json();
         if (response.ok) {
           console.log("Fetched videos:", data);
-          setVideos(data.videoWithSignedUrls || []);
+          setVideos(data.thumbnailSignedUrls || []);
         } else {
           throw new Error(data.message || "Failed to fetch videos");
         }
@@ -49,12 +49,14 @@ export default function Dashboard() {
     <div className="main-container">
       <div className="videoList-container">
         {videos.map((video, index) => (
-          <VideoCard key={index} video={video} onSelect={handleSelectVideo} className="video-card" />
+          <div key={index} classname='video-card' onClick={() => handleSelectVideo(video)}>
+            <img src={video.signedUrl} alt={video.title} />
+            </div>
         ))}
       </div>
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
-          <Video videoSrc={selectedVideo.videoSrc} />
+          <Video video={video} onSelect={handleSelectVideo} />
         </Modal>
       )}
     </div>
