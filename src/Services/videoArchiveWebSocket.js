@@ -3,7 +3,7 @@ const ws = new WebSocket(impor.meta.env.VITE_API_URL); // Adjust the URL as need
 ws.onopen = () => {
   console.log('WebSocket connection established');
   // Optionally, send the archive ID to the server
-  ws.send(JSON.stringify({ archiveId }));
+  ws.send(JSON.stringify({ archive_id }));
 };
 
 ws.onmessage = (e) => {

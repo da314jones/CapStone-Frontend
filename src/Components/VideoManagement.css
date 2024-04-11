@@ -1,0 +1,33 @@
+.session-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .video-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30%;
+  }
+  
+  .OTPublisher, .OTSubscriber {
+    width: 480px;
+    height: 360px;
+    background-color: #000;
+  }
+  
+  .form-container {
+    width: 480px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 30%;
+  }
+  

@@ -59,7 +59,7 @@ export default function NavBar() {
             ) : (
               <>
                 <li>
-                  <button onClick={signInWithGoogle}>Sign Up</button>
+                  <button onClick={signInWithGoogle}>Sign In</button>
                 </li>
                 <li>
                   <button onClick={signInWithGoogle}>Login</button>

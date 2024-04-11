@@ -1,14 +1,32 @@
-.video-container {
+.session-wrapper {
   display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align items at the start of the flex container */
+  gap: 20px; /* Space between video and form */
+  padding: 20px; /* Adds some padding around the content */
+  height: 100vh; /* Takes full viewport height */
+  overflow-y: auto; /* Allows scrolling if content overflows vertically */
+}
+
+.video-container {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Adjust based on your layout */
+  /* Keep your existing styles for .video-container */
 }
 
-.OTPublisher,
-.OTSubscriber {
+.OTPublisher, .OTSubscriber {
   width: 480px; /* Adjust based on your layout */
   height: 360px;
   background-color: #000; /* Gives a background to the video area */
+  /* Keep your existing styles for .OTPublisher and .OTSubscriber */
+}
+
+/* Add styles for your form if needed, for example: */
+.form-container {
+  width: 480px; /* You might want to match the width of the video or adjust as needed */
+  padding: 20px; /* Adds some padding around the form */
+  background-color: #fff; /* Background color for the form */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Optional: Adds a shadow for depth */
+  border-radius: 8px; /* Optional: Rounds the corners of the form container */
 }

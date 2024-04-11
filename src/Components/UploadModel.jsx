@@ -13,11 +13,11 @@ export default function UploadModel() {
         event.preventDefault();
         
         const formData = new FormData();
-        formData.append('file', selectedFile); // Assuming selectedFile is the state holding the file object
-        formData.append('userId', userId); // Ensure you have userId available in your component, fetched from user session or state
-        formData.append('title', videoTitle); // Assuming videoTitle is the state holding the title input
-        formData.append('summary', videoSummary); // Assuming videoSummary is the state holding the summary input
-        formData.append('isPrivate', videoPrivacy); // Assuming videoPrivacy is the state holding the privacy checkbox state
+        formData.append('file', selectedFile); 
+        formData.append('userId', userId); 
+        formData.append('title', videoTitle); 
+        formData.append('summary', videoSummary); 
+        formData.append('is_private', videoPrivacy); 
         // Add more fields as necessary
         
         try {

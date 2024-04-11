@@ -14,6 +14,7 @@
     "aws-sdk": "^2.1566.0",
     "components": "^0.1.0",
     "firebase": "^10.8.1",
+    "global": "^4.4.0",
     "opentok": "^2.17.1",
     "opentok-react": "^0.11.0",
     "react": "^18.2.0",
