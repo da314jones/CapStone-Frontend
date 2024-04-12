@@ -7,9 +7,9 @@ export default function VideoCard({ video, onSelect }) {
     return null;
   }
 
-  const { title, thumnailUrl, duration, views } = video;
-  if (!thumbnailUrl) {
-    console.error('Thumbnail URL is missing for video:', title);
+  const { title, thumbnailUrl, duration, views } = video;
+  if (!signedUrl) {
+    console.error('Signed URL is missing for video:', title);
     return null;
   }
   const imgRef = useRef(null);
@@ -35,8 +35,8 @@ export default function VideoCard({ video, onSelect }) {
       <div className="video-info">
         <h2 className="title">{video.title}</h2>
         <div className="metadata">
-          <span className="duration">{video.duration}</span>
-          <span className="views">{video.views} views</span>
+          <span className="duration">{onSelect.duration}</span>
+          <span className="views">{onSelect.views} views</span>
         </div>
       </div>
     </div>
