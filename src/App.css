@@ -4,7 +4,12 @@
   padding: 2rem;
   text-align: center;
 }
-
+/* .side-routes {
+  border: 5px solid orange;
+  display: flex;
+  margin-top: 90px;
+  margin-left: 51px;
+} */
 .logo {
   height: 6em;
   padding: 1.5em;

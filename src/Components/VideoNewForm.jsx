@@ -1,6 +1,8 @@
-// import React, { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import "./VideoNewform.css";
+
+import { useEffect, useState } from "react";
+import { useNavigate} from "react-router-dom";
+import StyledModal from "styled-react-modal";
+import "./VideoNewForm.css";
 
 // const API = import.meta.env.VITE_API_URL;
 

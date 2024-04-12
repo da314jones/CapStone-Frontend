@@ -1,7 +1,21 @@
-import React, { useState, useEffect }from 'react'
+import React from 'react'
 
 export default function Footer() {
-  const [videoSamples, setVideosSamples] = useState([]);
+//   const carousel = document.querySelector('.carousel');
+
+// carousel.addEventListener('scroll', () => {
+//   const videos = document.querySelectorAll('.video-container');
+//   videos.forEach(video => {
+//     const rect = video.getBoundingClientRect();
+//     if (rect.left >= 0 && rect.right <= window.innerWidth) {
+//       video.play();
+//     } else {
+//       video.pause();
+//     }
+//   });
+// });
+
+  // const [videoSamples, setVideosSamples] = useState([]);
 
 
   // useEffect(() => {
@@ -19,11 +33,13 @@ export default function Footer() {
   // }, []);
 
   return (
-    <div>
-      <video src=""></video>
-      <video src=""></video>
-      <video src=""></video>
-    </div>
+<div className="carousel">
+  <video className="video" src="https://www.youtube.com/watch?v=hyz6XFzJ0b4&pp=ygUeaG93IHRvIGRlbGV0ZSBmYWNlYm9vayBhY2NvdW50"></video>
+  <video className="video" src="https://www.youtube.com/watch?v=miylYeilOIo&pp=ygUdaG93IHRvIGdldCByaWQgb2Ygc3BhbSBlbWFpbHM%3D"></video>
+  <video className="video" src="https://www.youtube.com/watch?v=x3jyRce0aDc&pp=ygUgaG93IHRvIHN0b3Agc3BhbSBjYWxscyBvbiBpcGhvbmU%3D"></video>
+</div>
+
+  
   )
 }
 

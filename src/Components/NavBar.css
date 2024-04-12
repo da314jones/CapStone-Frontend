@@ -1,23 +1,28 @@
 .navbar-container {
   width: 100%;
-  height: 150px;
+  height: 110px;
+  background-color:rgb(28, 24, 24);
   position: fixed;
   top: 0;
   left: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 0 5px rgba(72, 73, 69, 0.1);
   z-index: 1000;
+  border: 3px solid green;
+  /* background-color: blue; */
+  margin-bottom: 20px;
 }
 
 .brand-logo {
   width: 200px;
-  margin-left: 40px;
+  margin-left: 105px;
+  border: 3px solid red;
 }
 
 .profile-menu {
-  position: relative;
+  /* position: fixed; */
   display: flex;
   align-items: center;
   height: 100%;

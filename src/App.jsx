@@ -12,7 +12,7 @@ import Show from "./Pages/Show";
 import FourOFour from "./Pages/FourOFour";
 import Profile from "./Components/Profile";
 import NavBar from "./Components/NavBar";
-import SideBar from "./Components/Sidebar";
+import SideBar from "../src/Components/SideBar";
 import ContentCreator from "./Components/ContentCreator";
 // import QuestionnaireModal from "./Components/QuestionnaireModal";
 
@@ -55,6 +55,7 @@ function App() {
         /> */}
             <Router>
               <NavBar />
+              <div className="side-routes">
               <SideBar />
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -69,6 +70,7 @@ function App() {
                   element={<ContentCreator />}
                 />
               </Routes>
+              </div>
             </Router>
             {/* <button onClick={openQuestionnaireModal}>Open Questionnaire</button> */}
           </div>

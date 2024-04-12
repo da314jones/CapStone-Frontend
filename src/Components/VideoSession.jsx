@@ -3,6 +3,7 @@
 // import { useArchiveId } from "../Pages/New";  // Adjust the path as needed to correctly import your context
 // import { AutoScaling } from "aws-sdk";
 
+
 // const apiKey = import.meta.env.VITE_VONAGE_API_KEY;
 // const API = import.meta.env.VITE_API_URL;
 
@@ -24,6 +25,14 @@
 //     document.head.appendChild(script);
 //     return () => document.head.removeChild(script);
 //   }, []);
+  const fetchSessionAndToken = async () => {
+    try {
+      const sessionRes = await fetch(`${API}/videos/session`, {
+        method: "POST",
+        body: user
+      });
+      if (!sessionRes.ok) throw new Error("Failed to fetch session");
+      const sessionData = await sessionRes.json();
 
 //   const user_id = sessionStorage.getItem('userUID');
 
@@ -38,6 +47,19 @@
 //       });
 //       if (!sessionRes.ok) throw new Error("Failed to fetch session");
 //       const sessionData = await sessionRes.json();
+      setSessionId(sessionData.sessionId);
+      console.log(sessionData.sessionId);
+      setToken(tokenData.token);
+      console.log(sessionData, tokenData);
+    } catch (error) {
+      console.error("Error fetching session and token:", error);
+    }
+  };
+  console.log(fetchSessionAndToken)
+  const startSession = async () => {
+    await fetchSessionAndToken();
+    setIsConnected(true);
+  };
 
 //       const tokenRes = await fetch(`${API}/videos/token/${sessionData.sessionId}`);
 //       if (!tokenRes.ok) throw new Error("Failed to fetch token");
