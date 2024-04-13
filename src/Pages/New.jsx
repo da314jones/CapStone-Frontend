@@ -1,12 +1,11 @@
-import React from "react";
-import VideoNewForm from "../Components/VideoNewForm";
-// POST
+import React from 'react';
+import VideoManagement from '../Components/VideoManagement';  // Adjust the path as needed
+import './New.css'; // Ensure this contains any necessary styles for this page
 
 export default function New() {
-  
   return (
-    <div>
-      <VideoNewForm />
+    <div className="new-container">
+      <VideoManagement />
     </div>
   );
 }

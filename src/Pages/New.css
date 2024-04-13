@@ -1,0 +1,31 @@
+/* New.css adjustments for non-scrollable layout with form fixed at bottom */
+.new-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
+    overflow: hidden; /* Disables scrolling */
+    margin-top: 0; /* Adjust based on your navbar height or other elements */
+  }
+  
+  .video-session {
+    flex-grow: 1; /* Allows video session to fill available space */
+padding-top: 40%;  }
+  
+  .video-new-form-container {
+    height: 150px; /* Fixed height for the form */
+    max-height: 150px; /* Ensures it doesn't grow beyond this */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f0f0; /* Example background color */
+    /* This ensures the form stays at the bottom */
+  }
+  
+  /* Consider responsive adjustments */
+  @media (max-width: 768px) {
+    .video-new-form-container {
+      padding: 10px; /* Adjust padding for smaller screens if needed */
+    }
+  }
+  

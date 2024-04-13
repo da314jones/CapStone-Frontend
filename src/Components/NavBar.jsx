@@ -9,6 +9,9 @@ export default function NavBar() {
   const user = useContext(AuthContext);
   const navigate = useNavigate();
 
+  console.log(user);
+
+
   const handleSignIn = async () => {
     try {
       await signInWithGoogle();
@@ -56,7 +59,7 @@ export default function NavBar() {
             ) : (
               <>
                 <li>
-                  <button onClick={signInWithGoogle}>Sign Up</button>
+                  <button onClick={signInWithGoogle}>Sign In</button>
                 </li>
                 <li>
                   <button onClick={signInWithGoogle}>Login</button>

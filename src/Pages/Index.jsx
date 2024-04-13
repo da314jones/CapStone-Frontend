@@ -1,12 +1,11 @@
 import React from "react";
-import VideoList from "../Components/VideoList";
 import Dashboard from "../Components/Dashboard";
 
 export default function Index() {
   
   return (
     <div>
-      <h2>Full List of Videos</h2>
+      <h2 class="text-black">Full List of Videos</h2>
       <Dashboard />
     </div>
   );
