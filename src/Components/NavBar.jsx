@@ -2,9 +2,12 @@ import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 import { signInWithGoogle, signOut } from "../Services/firebase";
-import "./NavBar.css";
 
-export default function NavBar() {
+
+import "./NavBar.css";
+import './SideBar.css';
+
+export default function NavBar({sidebar, setSidebar}) {
   const [dropDown, setDropdown] = useState(false);
   const user = useContext(AuthContext);
   const navigate = useNavigate();
@@ -32,8 +35,16 @@ export default function NavBar() {
     setDropdown(!dropDown);
   };
 
+
+  // $(document).ready(function(){
+  //   $("#menu").on("click", function(){
+  //      $("#menu").css("opacity", "0");
+  //       $("#lgMenu").addClass("enter");
+  //   });
+
   return (
     <div className="navbar-container">
+     <div id='menu' onClick={()=>setSidebar(!sidebar)}>|||</div>
      <Link to='/'>
      <img
         className="brand-logo"

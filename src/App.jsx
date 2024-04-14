@@ -21,6 +21,7 @@ Dashboard;
 
 function App() {
   const [isQuestionnaireOpen, setIsQuestionnaireOpen] = useState(false);
+  const [sidebar, setSidebar] = useState(false);
 
   const theme = {
     colors: {
@@ -56,9 +57,9 @@ function App() {
           onSubmit={handleQuestionnaireSubmit}
         /> */}
             <Router>
-              <NavBar />
+              <NavBar sidebar={sidebar} setSidebar={setSidebar}/>
               <div className="side-routes">
-              <SideBar />
+              <SideBar sidebar={sidebar} setSidebar={setSidebar}/>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/session" element={<New />} />
