@@ -5,9 +5,9 @@
   position: fixed;
   height: 100%;
   left: 0;
-  top: 0;
+  /* top: 0; */
   bottom: 0;
-  width: 88px;
+  width: 116px;
   background-color: white;
   padding: 20px;
   box-shadow: 2px 0 5px rgba(237, 238, 235, 0.1);
