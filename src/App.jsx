@@ -19,6 +19,7 @@ import ContentCreator from "./Components/ContentCreator";
 
 function App() {
   const [isQuestionnaireOpen, setIsQuestionnaireOpen] = useState(false);
+  const [reload, setReload] = useState(false);
   const theme = {
     colors: {
       primary: "#OO7bff",  //brand colors

@@ -1,10 +1,10 @@
 // SideBar.jsx
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "./SideBar.css";
 
 export default function SideBar() {
-  const location = useLocation();
+const navigate = useNavigate();
 
   return (
     <div className="sidebar">

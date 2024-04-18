@@ -9,6 +9,7 @@ export default function Dashboard() {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // temporary state for static video rerieval
   const [staticVideoSrc, setStaticVideoSrc] = useState("");
 
 
@@ -28,18 +29,26 @@ export default function Dashboard() {
       }
     };
     fetchVideos();
-  }, []);
+  }, [reload]);
+
+  const handleRefresh = () => {
+    setReload(!reload); 
+  };
 
 
 
   const handleStaticS3Key = async () => {
+    // hard coded s3 key to retrieve th videos signed url 
     const staticS3Key = "user/kzu3X1fTlFRIdmQ2weWqNakbULB2/H-J-H-K-H.mp4";
     try {
+      //endpoint
       const response = await fetch(`${API}/get-video/${staticS3Key}`);
       const data = await response.json();
       if (response.ok && data.signedVideoUrl) {
         console.log("Data:", data);
-        setStaticVideoSrc(data.signedVideoUrl); // Ensure this is setting the video URL correctly
+        //return of signed url supposedly 
+        //check to see this is setting the video URL correctly
+        setStaticVideoSrc(data.signedVideoUrl);
       } else {
         throw new Error(data.message || "Signed URL missing in response");
       }
@@ -48,8 +57,13 @@ export default function Dashboard() {
     }
   };
 
+
+  // actual code to retrive the signed url commmented out 
+  //because it isnt functioning
+
   // const handleSelectVideo = async (video) => {
-  //   console.log(video.s3_key);
+    //   console.log(video.s3_key);
+    // state s3 value encoded for specail characters
   //   const s3KeyEncoded = encodeURIComponent(video.s3_key);
   //   const url = `${API}/getVideo/${s3KeyEncoded}`;
   //   console.log("Requesting signed URL from:", url);
@@ -100,11 +114,15 @@ export default function Dashboard() {
       </div>
   
         <div className="video-container">
+            {/* this block is a test block to generate video
+             on the dashboard page until successful then can
+             be removed and redirected to the video compoenets  */}
           <video controls width="750" className="video">
             <source src={staticVideoSrc} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
+        {/* change to actual value from handleSelectVideo */}
       <button onClick={handleStaticS3Key}>Load Static Video</button>
 </div>
   );
