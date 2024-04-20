@@ -12,47 +12,72 @@ export default function NavBar({sidebar, setSidebar}) {
   const user = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleSignIn = async () => {
-    try {
-      await signInWithGoogle();
-      setDropdown(false);
-      navigate("/dashboard");
-    } catch (error) {
-      console.error("Login failed:", error);
-    }
-  };
+  // const handleSignIn = async () => {
+  //   try {
+  //     await signInWithGoogle();
+  //     setDropdown(false);
+  //     navigate("/dashboard");
+  //   } catch (error) {
+  //     console.error("Login failed:", error);
+  //   }
+  // };
 
   const handleSignOut = async () => {
-    try {
-      await signOut();
-      setDropdown(false);
-    } catch (error) {
-      console.error("Login failed:", error);
-    }
+    signOut();
+    setDropdown(false)
   };
+
+  // const handleSignOut = async () => {
+  //   try {
+  //     await signOut();
+  //     setDropdown(false);
+  //   } catch (error) {
+  //     console.error("Login failed:", error);
+  //   }
+  // };
 
   const handleToggleDropdown = () => {
     setDropdown(!dropDown);
   };
 
-
-  // $(document).ready(function(){
-  //   $("#menu").on("click", function(){
-  //      $("#menu").css("opacity", "0");
-  //       $("#lgMenu").addClass("enter");
-  //   });
+  const renderContent = () => {
+    if (user) {
+      return (
+        <div className="profile-menu">
+          <img
+            src={user ? user.photoURL : "/profileIcon.jpg"}
+            alt={user ? "Profile Picture" : "Profile Icon"}
+            onClick={handleToggleDropdown}
+          />
+          {dropDown && (
+            <div className="dropdown">
+              <button onClick={handleSignOut}>Sign Out</button>
+            </div>
+          )}
+        </div>
+      );
+    } else {
+      return (
+        <div className="profile-menu">
+          <button onClick={signInWithGoogle}>Sign Up</button>
+          <button onClick={signInWithGoogle}>Login</button>
+        </div>
+      );
+    }
+  };
 
   return (
     <div className="navbar-container">
-     <div id='menu' onClick={()=>setSidebar(!sidebar)}>|||</div>
-     <Link to='/'>
-     <img
-        className="brand-logo"
-        src={"/tidbitLogo.png"}
-        alt="Tidbits Brand Logo"
-      />
-     </Link> 
-      <div className="profile-menu">
+      <div id='menu' onClick={()=>setSidebar(!sidebar)}>|||</div>
+      <Link to="/">
+        <img
+          className="brand-logo"
+          src={"/tidbitLogo.png"}
+          alt="Tidbits Brand Logo"
+        />
+      </Link>
+      {renderContent()}
+      {/* <div className="profile-menu">
         <img
           src={user ? user.photoURL : "/profileIcon.jpg"}
           alt={user ? "Profile Picture" : "Profile Icon"}
@@ -76,7 +101,7 @@ export default function NavBar({sidebar, setSidebar}) {
             )}
           </ul>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }

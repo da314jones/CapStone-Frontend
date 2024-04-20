@@ -1,39 +1,57 @@
 .profile-page {
-  display: flex;
-  flex-direction: row;
-  margin-left: 27px;
-  margin-top: 100px;
+  /* display: flex;
+  flex-direction: row; */
+
+  margin-top: 50px;
+  padding-top: 10px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 70vw;
 }
 .profile-container {
   align-items: center;
-  padding-top: 60px;
+  padding-top: 30px;
   display: grid;
   grid-template-columns: auto 1fr; /* Personal info on the left, videos on the right */
   grid-gap: 20px; /* Add gap between grid items */
-  max-height: 90%;
-  border: 4px solid red;
+  max-height: 95%;
   overflow: scroll;
 }
 
 .profile-info {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
-  border: 2px solid #000000;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: #f6f6f8;
+  /* border: 2px solid #000000; */
   border-radius: 15px;
   padding: 20px;
+  padding-bottom: 30px;
   /* margin-left: 20px; */
-  height: 600px;
-  width: 300px;
+  /* height: 600px; */
+  /* width: 300px; */
   margin-right: 20px;
+}
+
+.uploaded{
+  font-size: 25px;
+  text-align: left;
 }
 
 .text_profile-details {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-left: 50px;
 }
-
+.profile-name h4{
+ font-size: 50px;
+ font-weight: 800;
+}
 .editbutton {
   background-color: #0d08ba; 
   color: white;
@@ -45,10 +63,8 @@
 }
 
 .profile-picture {
-  border: 2px solid black;
   border-radius: 50%;
-  width: 100px;
-  height: 100px;
+  width: 200px;
   overflow: hidden;
 }
 
@@ -84,9 +100,14 @@
 }
 
 .videos-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns */
-  grid-gap: 20px;
+  display: flex;
+  flex-direction: row;
+  /* grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns */
+  /* grid-gap: 15px;  */
+}
+
+::-webkit-scrollbar {
+  width: 10px;
 }
 
 .profile-video-card {
@@ -94,6 +115,7 @@
   margin: 10px;
   text-align: center;
 }
+
 
 .profile-video-card video {
   width: 100%;
@@ -104,7 +126,7 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  padding: 10px 20px;
+  padding: 0px 20px 10px;
   background-color: #007bff;
   color: white;
   cursor: pointer;
@@ -112,6 +134,7 @@
 
 .text {
   color: black;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Media Queries */

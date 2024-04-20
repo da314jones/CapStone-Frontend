@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 
 export default function VideoEditForm() {
-  // const [file, setFile ] = useState(null);
-  const [category, setCategory] = useState([]);
-  const [topic, setTopic] = useState([]);
+  const [file, setFile ] = useState(null);
+  const [category, setCategory] = useState("");
+  const [topic, setTopic] = useState("");
 
-  // const handleFileChange = (e) => {
-  //     setFile(file);
-  // };
+  const handleFileChange = (e) => {
+      setFile(e.target.files[0]);
+  };
 
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
   };
 
   const handleTopicChange = (e) => {
-    setTopic(topic);
+    setTopic(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("File", file);
+    console.log("Category:", category);
+    console.log("Topic:", topic);
   };
   return (
     <div>

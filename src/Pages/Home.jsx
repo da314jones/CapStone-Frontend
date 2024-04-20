@@ -7,7 +7,7 @@ export default function Home() {
       <div className="h-screen bg-blue-700 bg-cover bg-center">
         <div className="flex items-center justify-center h-full px-6 text-center text-white md:px-12">
           <div>
-            <img className="learner-music" src="src/assets/Designer.png" />
+            <img className="learner-music" src="/Designer.png" />
           </div>
           <div className="home-page-details">
             <h1 className="go-to-grow">Where Those Who Know Go to<span className="grow">Grow</span></h1>

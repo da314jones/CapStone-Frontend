@@ -1,66 +1,106 @@
 import React, { useEffect, useState } from "react";
+import {
+  S3Client,
+  ListObjectsV2Command,
+  GetObjectCommand,
+  HeadObjectCommand,
+  PutObjectCommand
+} from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import https from "https";
 import Video from "./Video";
 import Modal from './Modal';
 import "./Dashboard.css";
+import DashboardFilter from "./DashboardFilter.jsx";
+
 
 const API = import.meta.env.VITE_API_URL;
 
+const s3Client = new S3Client({
+  region: import.meta.env.VITE_AWS_REGION,
+  credentials: {
+    accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+    secretAccessKey: import.meta.env.AWS_AWS_SECRET_ACCESS_KEY,
+  },
+});
+const BUCKET_NAME = import.meta.env.VITE_BUCKET_NAME
+
+
 export default function Dashboard() {
-  const [videos, setVideos] = useState([]);
+  const [thumbnails, setThumbnails] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+
   useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        const response = await fetch(`${API}/videos/index-thumbnails`);
-        const data = await response.json();
-        if (response.ok) {
-          console.log("Fetched videos:", data);
-          setVideos(data.thumbnailSignedUrls || []);
-        } else {
-          throw new Error(data.message || "Failed to fetch videos");
-        }
-      } catch (error) {
-        console.error("Error fetching videos:", error);
-      }
-    };
-    fetchVideos();
+    fetch(`${API}/videos/index-thumbnails`)
+      .then((response) => response.json())
+      .then((data) => {
+        setThumbnails(data.thumbnailImage);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
-  const handleSelectVideo = async (video) => {
-    console.log(video.s3_key)
-    const url = `${API}/generate-signed-url/${encodeURIComponent(video.s3_key)}`;
-    console.log('Requesting signed URL from:', url)
+
+  const handleVideoClick = async (thumbnailKey) => {
     try {
-      const response = await fetch(url);
-      const data = await response.json();
-      if (response.ok) {
-        setSelectedVideo({ ...video, videoSrc: video.signedVideoUrl });
-        setIsModalOpen(true);
-      } else {
-        throw new Error(data.message || 'Failed to fetch videoURL');
+      const videoKey = thumbnailKey.replace('.png', '.mp4');
+  
+      const response = await fetch(`${API}/videos/signedVideoUrl`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ videoKey }) 
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch signed URL');
       }
+      const data = await response.json();
+      console.log(data);
+     
+      console.log("Video key:", data.signedUrl)
+      console.log(data);
+
+      setSelectedVideo(data.signedUrl);
+      setIsModalOpen(true);
+      console.log(data);
+
     } catch (error) {
-      console.error('Error fetching video URL:', error);
+      console.error("Error fetching or signing URL:", error);
     }
   };
+  
+console.log('apple')
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedVideo(null);
   }
+
   return (
-    <div className="main-container">
-      <div className="videoList-container">
-        {videos.map((video, index) => (
-          <div key={index} className='video-card' onClick={() => handleSelectVideo(video)}>
-            <img src={video.signedUrl} className="thumbnail" alt={video.title} loading="lazy" />
-          </div>
-        ))}
-      </div>
-      {isModalOpen && (
-        <Modal onClose={handleCloseModal}>
-          <Video videoSrc={selectedVideo.videoSrc} onClose={handleCloseModal} />
-        </Modal>
-      )}
-    </div>
+    // <div className="main-container">
+    //   <DashboardFilter/>
+    //   <video controls autoPlay muted>
+    //   <source src={selectedVideo} type="video/mp4" />
+    //   Your browser does not support the video tag.
+    // </video>
+    //   <div className="videoList-container">
+    //     {thumbnails.map((thumbnail, index) => (
+    //       <div key={index} className="video-card" onClick={() => handleVideoClick(thumbnail.thumbnail_key)}>
+    //         <img src={thumbnail.thumbnailUrl} alt={thumbnail.title} className="thumbnail" loading="lazy" />
+    //       </div>
+    //     ))}
+    //   </div>
+    //   {isModalOpen && selectedVideo && (
+    //     <Modal onClose={handleCloseModal}>
+    //       {/* <Video videoSrc={selectedVideo} selectedVideo={selectedVideo} onClose={handleCloseModal} /> */}
+    //     </Modal>
+    //   )}
+
+    // </div>
+    <>
+    <DashboardFilter/>
+    </>
   );
 }

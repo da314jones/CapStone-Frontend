@@ -1,6 +1,7 @@
 // SideBar.jsx
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProvider";
 import "./SideBar.css";
 import { FaFileUpload } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
@@ -9,15 +10,15 @@ import { MdCreateNewFolder } from "react-icons/md";
 
 export default function ({sidebar, setSidebar}) {
   const location = useLocation();
-  
-  
+  const user = useContext(AuthContext);
 
   return (
     
     <div className="sidebar">
-    
-      <nav> 
-      <div id='lgMenu' className= {sidebar && 'enter'} >
+
+      {user?.uid && <nav>
+
+        <div id='lgMenu' className= {sidebar && 'enter'} >
         <span id='exit' onClick={()=>setSidebar(false)}>&times;</span>
         <ul>
         <li>
@@ -53,6 +54,7 @@ export default function ({sidebar, setSidebar}) {
               <ImProfile style={{ transform: location.pathname  === '/profile' ? 'scale(1.3)' : 'scale(1)' ,display: 'block',
       margin: '0 auto'}} />
               Profile
+
             </NavLink>
           </li>
           <li>

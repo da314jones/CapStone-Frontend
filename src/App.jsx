@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ModalProvider } from "styled-react-modal";
 import { ThemeProvider } from "styled-components";
@@ -10,7 +10,6 @@ import Edit from "./Pages/Edit";
 import New from "./Pages/New";
 import Show from "./Pages/Show";
 import FourOFour from "./Pages/FourOFour";
-import VideoSession from "./Components/VideoSession";
 import Dashboard from "./Components/Dashboard";
 import Profile from "./Components/Profile";
 import NavBar from "./Components/NavBar";
@@ -22,6 +21,8 @@ Dashboard;
 function App() {
   const [isQuestionnaireOpen, setIsQuestionnaireOpen] = useState(false);
   const [sidebar, setSidebar] = useState(false);
+  const [thumbnailReload, setthumbnailReload] = useState(false);
+
 
   const theme = {
     colors: {

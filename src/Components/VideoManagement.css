@@ -1,32 +1,89 @@
 .session-wrapper {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 20px;
-    height: 100vh;
-    overflow-y: auto;
   }
-
-  .video-container {
+  
+  .video-form-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin-top: 30%;
   }
-
-  .OTPublisher, .OTSubscriber {
-    width: 480px;
-    height: 360px;
-    background-color: #000;
+  
+  .video-container {
+    width: 80%; /* Adjust width as needed */
+    text-align: center;
+    margin-top: 60px;
   }
-
+  
+  /* Form container styling */
   .form-container {
-    width: 480px;
+    width: 50%; /* Adjust width as needed */
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    margin-top: 30%;
+    margin-top: 30px; /* Adjust margin from the top */
+    margin-left: 140px;
+  }
+  
+  /* Input field styling */
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .video-summary{
+    height: 150px;
+  }
+
+  .connect-session{
+    padding: 10px;
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 140px;
+  }
+
+  .connect-session:hover{
+    background-color: #0056b3;
+  }
+
+  /* Button styling */
+  .video-button {
+    width: 119.5%;
+    padding: 10px;
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  /* Button hover effect */
+  .video-button:hover {
+    background-color: #0056b3;
+  }
+
+  .form-button {
+    padding: 10px;
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .form-button:hover {
+    background-color: #0056b3;
   }
