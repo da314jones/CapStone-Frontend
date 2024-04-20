@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { OTSession, OTPublisher, OTStreams, OTSubscriber } from "opentok-react";
 import "./VideoManagement.css";
+import { useNavigate } from "react-router-dom";
 
 const API = import.meta.env.VITE_API_URL;
 const apiKey = import.meta.env.VITE_VONAGE_API_KEY;
 
 export default function VideoManagement() {
+  const navigate = useNavigate();
   const [sessionId, setSessionId] = useState("");
   const [token, setToken] = useState("");
   const [otSdkReady, setOtSdkReady] = useState(false);
@@ -19,6 +21,7 @@ export default function VideoManagement() {
     ai_summary: "",
     is_private: true,
   });
+  const [startRecordingButtonDisabled, setStartRecordingButtonDisabled] = useState(false);
 
   const userId = sessionStorage.getItem("userUID");
 
@@ -51,12 +54,13 @@ export default function VideoManagement() {
   };
 
   const startRecording = async () => {
-    console.log(userId);
+    console.log("User ID: ", userId);
     if (!isConnected) {
       console.error("Session not connected yet.");
       return;
     }
     try {
+      setStartRecordingButtonDisabled(true);
       const response = await fetch(`${API}/videos/start-recording`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -69,16 +73,19 @@ export default function VideoManagement() {
       setIsRecording(true);
       setArchiveId(data.archiveId);
       console.log("Recording started with Archive ID:", data.archiveId);
+      setStartRecordingButtonDisabled(false);
     } catch (error) {
+      setStartRecordingButtonDisabled(false);
       console.error("Failed to start recording:", error.message);
     }
   };
 
   const stopRecording = async () => {
-    console.log(userId);
-    console.log(archiveId);
+    console.log("User ID:", userId);
+    console.log("Archive ID:", archiveId);
     if (!archiveId) {
-      console.error("Archive ID is not defined.");
+      console.error("Archive ID is not defined."); 
+      //give user a prompt to try again
       return;
     }
     try {
@@ -90,13 +97,21 @@ export default function VideoManagement() {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const data = await response.json();
+      const data = await response.json(); //todo: is something supposed to read this var?
       setIsRecording(false);
       console.log("Recording stopped for Archive ID:", archiveId);
     } catch (error) {
       console.error("Failed to stop recording:", error.message);
+      //give user a prompt to try again. or end session and try to record again. (this might be the safer option)
     }
   };
+
+  const endSession = async () => {
+    setIsConnected(false);
+    setSessionId("");
+    //force stop recording 
+    stopRecording();
+  }
 
   const handleTextChange = (e) => {
     setVideoMeta({ ...videoMeta, [e.target.name]: e.target.value });
@@ -105,7 +120,7 @@ export default function VideoManagement() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!archiveId) {
-      alert("Archive ID is required for submission.");
+      alert("Archive ID is required for submission."); // can we use a modal of some sort instead of browser alert?
       return;
     }
     const response = await fetch(`${API}/videos/uploadVideo/${archiveId}`, {
@@ -117,8 +132,10 @@ export default function VideoManagement() {
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(`Failed to submit video metadata: ${errorText}`);
+    } else {
+      console.log("Video metadata submitted successfully!");
+      navigate("/profile");
     }
-    console.log("Video metadata submitted successfully!");
   };
 
   return (
@@ -127,7 +144,7 @@ export default function VideoManagement() {
         <div className="video-container">
           {!isConnected ? (
             <button className="connect-session" onClick={startSession}>
-              Connect Session
+              {`Connect Session`} {/* have a "connecting..." while we wait for sessionId; especially important for deployed version where render could take 10-30 seconds*/}
             </button>
           ) : (
             <OTSession
@@ -141,7 +158,7 @@ export default function VideoManagement() {
                 <OTSubscriber />
               </OTStreams>
               {!isRecording ? (
-                <button className="video-button" onClick={startRecording}>
+                <button className="video-button" onClick={startRecording} disabled={startRecordingButtonDisabled}>
                   Start Recording
                 </button>
               ) : (
@@ -151,7 +168,7 @@ export default function VideoManagement() {
               )}
               <button
                 className="video-button"
-                onClick={() => setIsConnected(false)}
+                onClick={endSession}
               >
                 End Session
               </button>
@@ -196,7 +213,8 @@ export default function VideoManagement() {
               required
             ></textarea>
 
-            <button className="form-button" type="submit">
+            <button className="form-button" type="submit" disabled={isRecording}> 
+            {/* disable submit while video recording */}
               Submit Video Info
             </button>
           </form>
