@@ -65,8 +65,9 @@ console.log(selectedVideo)
           const key = `${thumbnail.thumbnail_key}-${index}`;
           console.log("Rendering thumbnail with key:", key);
           return (
-            <div key={key} className="video-card" onClick={() => handleVideoClick(thumbnail.thumbnail_key)}>
+            <div key={key} style={{ width: '300px', height: '300px' }} className="video-card bg-white h-94 mb-{20} rounded-lg overflow-hidden shadow-lg m-6" onClick={() => handleVideoClick(thumbnail.thumbnail_key)}>
               <img src={thumbnail.thumbnailUrl} alt={thumbnail.title || "Thumbnail"} className="thumbnail" loading="lazy" />
+              <p classsName="text-black-700 z-20 ht-106"  >{thumbnail.title}</p>
             </div>
           );
         })}
@@ -77,7 +78,6 @@ console.log(selectedVideo)
         </Modal>
       )}
       
-    <p>Back</p>
     </>}
     {!filter && <DashboardFilter setFilter={setFilter} filter={filter}/>}
     </div>
