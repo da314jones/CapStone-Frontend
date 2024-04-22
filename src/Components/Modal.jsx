@@ -7,7 +7,6 @@ export default function Modal({ show, onClose, children, selectedVideo }) {
   }
   return (
     <div className="modal" id="modal">
-      <h2>Modal Window</h2>
       <div className="content">
         {React.cloneElement(children, { selectedVideo })}
       </div>
