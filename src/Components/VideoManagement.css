@@ -13,6 +13,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    margin-left: 230px;
   }
   
   .video-container {
@@ -122,7 +123,7 @@
 
   /* Button styling */
   .video-button {
-    width: 119.5%;
+    width: 100%;
     padding: 10px;
     background-color: #000000;
     color: #fff;

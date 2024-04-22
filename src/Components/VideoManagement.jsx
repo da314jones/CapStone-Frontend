@@ -103,17 +103,25 @@ export default function VideoManagement() {
       alert("Archive ID is required for submission.");
       return;
     }
-    const response = await fetch(`${API}/videos/uploadVideo/${archiveId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...videoMeta, archiveId, user_id: userId }),
-    });
-    setArchiveId(null);
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Failed to submit video metadata: ${errorText}`);
+    try {
+      const response = await fetch(`${API}/videos/uploadVideo/${archiveId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...videoMeta, archiveId, user_id: userId }),
+      });
+      setArchiveId(null);
+      if (response.ok) {
+        console.log("Video metadata submitted successfully!");
+        setTimeout(() => {
+          navigate(0);
+        }, 3000);
+      } else {
+        const errorText = await response.text();
+        throw new Error(`Failed to submit video metadata: ${errorText}`);
+      }
+    } catch (error) {
+      console.error('Failed to submit video metadat:', error.message);
     }
-    console.log("Video metadata submitted successfully!");
   };
 
   return (

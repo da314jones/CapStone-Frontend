@@ -28,6 +28,8 @@
 
 /* Video list container styles */
 .videoList-container {
+  color: black;
+  font-size: 20px;
   flex-grow: 1;
   padding-left: 125px;
   display: flex;
@@ -38,6 +40,7 @@
   /* background: #ecf0f1; */
   margin-top: 30vh; 
 }
+
 
 /* Video card styles */
 .video-card {
