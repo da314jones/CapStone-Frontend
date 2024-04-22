@@ -99,10 +99,6 @@ export default function VideoManagement() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!archiveId) {
-      alert("Archive ID is required for submission.");
-      return;
-    }
     try {
       const response = await fetch(`${API}/videos/uploadVideo/${archiveId}`, {
         method: "POST",
@@ -113,7 +109,7 @@ export default function VideoManagement() {
       if (response.ok) {
         console.log("Video metadata submitted successfully!");
         setTimeout(() => {
-          navigate(0);
+          navigate('/dashboard');
         }, 3000);
       } else {
         const errorText = await response.text();
